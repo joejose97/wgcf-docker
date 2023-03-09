@@ -1,7 +1,7 @@
 # wgcf-docker
 CloudFlare warp in docker
 
-Note: net.ipv4.conf.all.src_valid_mark=1 [Learning about Linux fwmark masks](https://utcc.utoronto.ca/~cks/space/blog/linux/LinuxIpFwmarkMasks) Seems to work with it being 0 as well in some cases.
+Note: net.ipv4.conf.all.src_valid_mark=1 [Learning about Linux fwmark masks](https://utcc.utoronto.ca/~cks/space/blog/linux/LinuxIpFwmarkMasks) Related to Reverse Path Filter(rp_filter). Seems to work with it being 0 as well in some cases. 
 
 1. Run a single container:
 

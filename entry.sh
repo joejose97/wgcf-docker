@@ -51,7 +51,7 @@ runwgcf() {
   fi
 
 
-  modprobe ip6table_raw
+  #modprobe ip6table_raw #Not sure why this is loaded. Take care of loading kernel modules in host, not here.
   
   wg-quick up wgcf
   

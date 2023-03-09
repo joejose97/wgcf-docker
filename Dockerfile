@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/*
   
   
-RUN curl -fsSL git.io/wgcf.sh | bash && mkdir -p /wgcf
+RUN curl -fsSL https://raw.githubusercontent.com/joejose97/script/master/wgcf.sh | bash && mkdir -p /wgcf
 
 WORKDIR /wgcf
 

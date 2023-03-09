@@ -1,6 +1,7 @@
 # wgcf-docker
 CloudFlare warp in docker
 
+Note: net.ipv4.conf.all.src_valid_mark=1 [Learning about Linux fwmark masks](https://utcc.utoronto.ca/~cks/space/blog/linux/LinuxIpFwmarkMasks)
 
 1. Run a single container:
 
@@ -9,8 +10,8 @@ CloudFlare warp in docker
 docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
-    --privileged --cap-add net_admin \
-    -v /lib/modules:/lib/modules \
+    --sysctl net.ipv4.conf.all.src_valid_mark=1 \
+    --cap-add net_admin \
     -v $(pwd)/wgcf:/wgcf \
     neilpang/wgcf-docker
 
@@ -26,8 +27,8 @@ The above command will enable both ipv4 and ipv6, you can enable ipv4 or ipv6 on
 docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
-    --privileged --cap-add net_admin \
-    -v /lib/modules:/lib/modules \
+    --sysctl net.ipv4.conf.all.src_valid_mark=1 \
+    --cap-add net_admin \
     -v $(pwd)/wgcf:/wgcf \
     neilpang/wgcf-docker  -4 
 
@@ -40,8 +41,8 @@ docker run --rm -it \
 docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
-    --privileged --cap-add net_admin \
-    -v /lib/modules:/lib/modules \
+    --sysctl net.ipv4.conf.all.src_valid_mark=1 \
+    --cap-add net_admin \
     -v $(pwd)/wgcf:/wgcf \
     neilpang/wgcf-docker  -6 
 
@@ -55,8 +56,8 @@ or:
 docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
-    --privileged --cap-add net_admin \
-    -v /lib/modules:/lib/modules \
+    --sysctl net.ipv4.conf.all.src_valid_mark=1 \
+    --cap-add net_admin \
     -v $(pwd)/wgcf:/wgcf \
     neilpang/wgcf-docker:alpine
 
@@ -73,8 +74,8 @@ The above command will enable both ipv4 and ipv6, you can enable ipv4 or ipv6 on
 docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
-    --privileged --cap-add net_admin \
-    -v /lib/modules:/lib/modules \
+    --sysctl net.ipv4.conf.all.src_valid_mark=1 \
+    --cap-add net_admin \
     -v $(pwd)/wgcf:/wgcf \
     neilpang/wgcf-docker:alpine  -4
 
@@ -86,8 +87,8 @@ docker run --rm -it \
 docker run --rm -it \
     --name wgcf \
     --sysctl net.ipv6.conf.all.disable_ipv6=0 \
-    --privileged --cap-add net_admin \
-    -v /lib/modules:/lib/modules \
+    --sysctl net.ipv4.conf.all.src_valid_mark=1 \
+    --cap-add net_admin \
     -v $(pwd)/wgcf:/wgcf \
     neilpang/wgcf-docker:alpine  -6
 
@@ -120,10 +121,11 @@ services:
     image: neilpang/wgcf-docker:latest
     volumes:
       - ./wgcf:/wgcf
-      - /lib/modules:/lib/modules
-    privileged: true
+      #- /lib/modules:/lib/modules #This seems unnecessary if modules are not loaded from within the container. [linuxserver/docker-wireguard](https://github.com/linuxserver/docker-wireguard) Also has it as optional.
+    privileged: false
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv4.conf.all.src_valid_mark: 1
     cap_add:
       - NET_ADMIN
     
@@ -146,10 +148,11 @@ services:
     image: neilpang/wgcf-docker:latest
     volumes:
       - ./wgcf:/wgcf
-      - /lib/modules:/lib/modules
-    privileged: true
+      #- /lib/modules:/lib/modules #This seems unnecessary if modules are not loaded from within the container. [linuxserver/docker-wireguard](https://github.com/linuxserver/docker-wireguard) Also has it as optional.
+    privileged: false
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv4.conf.all.src_valid_mark: 1
     cap_add:
       - NET_ADMIN
     command: "-6"
@@ -176,10 +179,11 @@ services:
     image: neilpang/wgcf-docker:latest
     volumes:
       - ./wgcf:/wgcf
-      - /lib/modules:/lib/modules
-    privileged: true
+      #- /lib/modules:/lib/modules #This seems unnecessary if modules are not loaded from within the container. [linuxserver/docker-wireguard](https://github.com/linuxserver/docker-wireguard) Also has it as optional.
+    privileged: false
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv4.conf.all.src_valid_mark: 1
     cap_add:
       - NET_ADMIN
     command: "-4"
@@ -210,10 +214,11 @@ services:
     image: neilpang/wgcf-docker:alpine
     volumes:
       - ./wgcf:/wgcf
-      - /lib/modules:/lib/modules
-    privileged: true
+      #- /lib/modules:/lib/modules #This seems unnecessary if modules are not loaded from within the container. [linuxserver/docker-wireguard](https://github.com/linuxserver/docker-wireguard) Also has it as optional.
+    privileged: false
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv4.conf.all.src_valid_mark: 1
     cap_add:
       - NET_ADMIN
     
@@ -242,10 +247,11 @@ services:
     image: neilpang/wgcf-docker:alpine
     volumes:
       - ./wgcf:/wgcf
-      - /lib/modules:/lib/modules
-    privileged: true
+      #- /lib/modules:/lib/modules #This seems unnecessary if modules are not loaded from within the container. [linuxserver/docker-wireguard](https://github.com/linuxserver/docker-wireguard) Also has it as optional.
+    privileged: false
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv4.conf.all.src_valid_mark: 1
     cap_add:
       - NET_ADMIN
     command: "-6"
@@ -273,10 +279,11 @@ services:
     image: neilpang/wgcf-docker:alpine
     volumes:
       - ./wgcf:/wgcf
-      - /lib/modules:/lib/modules
-    privileged: true
+      #- /lib/modules:/lib/modules #This seems unnecessary if modules are not loaded from within the container. [linuxserver/docker-wireguard](https://github.com/linuxserver/docker-wireguard) Also has it as optional.
+    privileged: false
     sysctls:
       net.ipv6.conf.all.disable_ipv6: 0
+      net.ipv4.conf.all.src_valid_mark: 1
     cap_add:
       - NET_ADMIN
     command: "-4"
